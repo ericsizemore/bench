@@ -1,10 +1,10 @@
 Bench
 =====
 
-[![Build Status](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/bench/build-status/develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/bench/?branch=develop)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/bench/?branch=develop)
-[![PHPStan](https://github.com/ericsizemore/bench/actions/workflows/ci.yml/badge.svg)](https://github.com/ericsizemore/bench/actions/workflows/ci.yml)
+[![Build Status](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ericsizemore/bench/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ericsizemore/bench/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ericsizemore/bench/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ericsizemore/bench/?branch=master)
+[![PHPStan](https://github.com/ericsizemore/bench/actions/workflows/main.yml/badge.svg)](https://github.com/ericsizemore/bench/actions/workflows/main.yml)
 [![Tests](https://github.com/ericsizemore/bench/actions/workflows/tests.yml/badge.svg)](https://github.com/ericsizemore/bench/actions/workflows/tests.yml)
 [![Latest Stable Version](https://img.shields.io/packagist/v/esi/bench.svg)](https://packagist.org/packages/esi/bench)
 [![Downloads per Month](https://img.shields.io/packagist/dm/esi/bench.svg)](https://packagist.org/packages/esi/bench)

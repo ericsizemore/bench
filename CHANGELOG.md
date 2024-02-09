@@ -6,7 +6,7 @@ you can use the following url: https://github.com/ericsizemore/bench/compare/v3.
 
 Simply replace the version numbers depending on which set of changes you wish to see.
 
-### 3.0.0 (Work in Progress)
+### 3.0.0 (2024-02-09)
 
   * Forked from [`devster/ubench`](https://github.com/devster/ubench) Version 2.1
   * Initial release for `Esi\Bench` will therefore be `3.0.0`.

@@ -1,2 +1,8 @@
-/vendor
-/composer.lock
+.idea/
+vendor/
+build/
+composer.phar
+*.iws
+out/
+.idea_modules/
+clover.xml

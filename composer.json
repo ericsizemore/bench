@@ -1,32 +1,60 @@
 {
-    "name": "devster/ubench",
+    "name": "esi/bench",
     "description": "Micro PHP library for benchmarking",
-    "keywords": ["benchmark", "bench", "library", "micro"],
-    "homepage": "https://github.com/devster/ubench",
-    "type": "library",
     "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "benchmark",
+        "bench",
+        "library",
+        "micro"
+    ],
     "authors": [
+        {
+            "name": "Eric Sizemore",
+            "email": "admin@secondversion.com",
+            "homepage": "https://www.secondversion.com/"
+        },
         {
             "name": "Jeremy Perret",
             "email": "jeremy@devster.org"
         }
     ],
-
-    "autoload": {
-        "psr-0": { "Ubench": "src/" }
+    "homepage": "https://github.com/ericsizemore/bench",
+    "support": {
+        "issues": "https://github.com/ericsizemore/bench/issues",
+        "forum": "https://github.com/ericsizemore/bench/discussions",
+        "source": "https://github.com/ericsizemore/bench/tree/master",
+        "security": "https://github.com/ericsizemore/bench/security/policy"
     },
-
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
+    "require": {
+        "php": "^8.2 <8.5"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan-phpunit": "^1.4",
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "phpunit/phpunit": "^11.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Esi\\Bench\\": "src/"
         }
     },
-
-    "require-dev": {
-        "phpunit/phpunit": "*"
+    "autoload-dev": {
+        "psr-4": {
+            "Esi\\Bench\\Tests\\": "tests/"
+        }
     },
-  
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "test": "phpunit"
     }
 }

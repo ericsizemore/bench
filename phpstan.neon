@@ -1,0 +1,14 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: 9
+    paths:
+        - ./src
+        - ./tests
+    ignoreErrors:
+        # Ignore for now, as PHPStan does not seem to pick up getTime() or the getMemory* functions returns string if $readable is false.
+        - '#Parameter \#2 \$string of static method PHPUnit\\Framework\\Assert\:\:assertMatchesRegularExpression\(\) expects string, float\|string given.#'
+        - '#Parameter \#2 \$string of static method PHPUnit\\Framework\\Assert\:\:assertMatchesRegularExpression\(\) expects string, int\|string given.#'

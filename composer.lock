@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "214d3a26715f3075fa4beb85d4f42dc2",
+    "content-hash": "609b8154f785e8d5c8b4974e1155c84b",
     "packages": [],
     "packages-dev": [
         {
@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8b05388c3d1a79f10e0f3030ffd02f47c744614a"
+                "reference": "8cf69ae973ec32c05e44953077e7186c23797998"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8b05388c3d1a79f10e0f3030ffd02f47c744614a",
-                "reference": "8b05388c3d1a79f10e0f3030ffd02f47c744614a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8cf69ae973ec32c05e44953077e7186c23797998",
+                "reference": "8cf69ae973ec32c05e44953077e7186c23797998",
                 "shasum": ""
             },
             "require": {
@@ -296,7 +296,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-08T14:38:53+00:00"
+            "time": "2024-02-20T18:21:20+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -304,12 +304,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "e95a58baebb1f2daf7067c3667bff371b202151d"
+                "reference": "77bdf9644e105833f810eefc3d6e051ac33dd939"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/e95a58baebb1f2daf7067c3667bff371b202151d",
-                "reference": "e95a58baebb1f2daf7067c3667bff371b202151d",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/77bdf9644e105833f810eefc3d6e051ac33dd939",
+                "reference": "77bdf9644e105833f810eefc3d6e051ac33dd939",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
                 "source": "https://github.com/phpstan/phpstan-phpunit/tree/1.4.x"
             },
-            "time": "2023-11-20T08:52:11+00:00"
+            "time": "2024-02-19T08:57:29+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -357,12 +357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "2090cfca49793b876887695f3293062070abc83c"
+                "reference": "2bc39672669f0493b3b3833f13273cbedaaa121b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/2090cfca49793b876887695f3293062070abc83c",
-                "reference": "2090cfca49793b876887695f3293062070abc83c",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/2bc39672669f0493b3b3833f13273cbedaaa121b",
+                "reference": "2bc39672669f0493b3b3833f13273cbedaaa121b",
                 "shasum": ""
             },
             "require": {
@@ -399,7 +399,7 @@
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
                 "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.6.x"
             },
-            "time": "2023-11-20T08:49:59+00:00"
+            "time": "2024-02-19T08:54:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

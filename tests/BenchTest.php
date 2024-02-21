@@ -52,6 +52,7 @@ use function sleep;
 
 /**
  * Bench tests.
+ * @internal
  */
 #[CoversClass(Bench::class)]
 class BenchTest extends TestCase

@@ -13,11 +13,13 @@
         {
             "name": "Eric Sizemore",
             "email": "admin@secondversion.com",
-            "homepage": "https://www.secondversion.com/"
+            "homepage": "https://www.secondversion.com/",
+            "role": "Fork Developer"
         },
         {
             "name": "Jeremy Perret",
-            "email": "jeremy@devster.org"
+            "email": "jeremy@devster.org",
+            "role": "Original Developer"
         }
     ],
     "homepage": "https://github.com/ericsizemore/bench",
@@ -50,7 +52,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-3.x": "3.0-dev"
+            "dev-master": "4.0-dev"
         }
     },
     "scripts": {

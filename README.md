@@ -21,14 +21,10 @@ Thanks to them and all the contributors!
 
 ### Composer ###
 
-Add this to your composer.json
+Run the following command to install the package
 
-```json
-{
-    "require": {
-        "esi/bench": "~3.0.0"
-    }
-}
+```shell
+composer require esi/bench:~3.0.0
 ```
 
 ## Usage

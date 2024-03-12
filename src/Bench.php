@@ -45,7 +45,7 @@ use LogicException;
 
 use function memory_get_usage;
 use function memory_get_peak_usage;
-use function microtime;
+use function hrtime;
 use function preg_replace;
 use function round;
 use function sprintf;
@@ -77,7 +77,7 @@ class Bench implements BenchInterface
      */
     public function start(): void
     {
-        $this->startTime = microtime(true);
+        $this->startTime = hrtime(true);
     }
 
     /**
@@ -89,7 +89,7 @@ class Bench implements BenchInterface
             throw new LogicException('Bench has not been started. Call start() first.');
         }
 
-        $this->endTime     = microtime(true);
+        $this->endTime     = hrtime(true);
         $this->memoryUsage = memory_get_usage(true);
 
         return $this;
@@ -108,7 +108,7 @@ class Bench implements BenchInterface
             throw new LogicException('Bench has not been ended. Call end() first.');
         }
 
-        $elapsed = $this->endTime - $this->startTime;
+        $elapsed = ($this->endTime - $this->startTime) / 1_000_000;
 
         if ($readable) {
             return $elapsed;

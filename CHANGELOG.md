@@ -6,6 +6,10 @@ you can use the following url: https://github.com/ericsizemore/bench/compare/v3.
 
 Simply replace the version numbers depending on which set of changes you wish to see.
 
+### 3.1.0 ()
+
+  * Replace usage of `microtime` with `hrtime`
+
 ### 3.0.0 (2024-02-09)
 
   * Forked from [`devster/ubench`](https://github.com/devster/ubench) Version 2.1

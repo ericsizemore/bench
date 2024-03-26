@@ -2,11 +2,11 @@
 A not so exhaustive list of changes for each release.
 
 For a more detailed listing of changes between each version, 
-you can use the following url: https://github.com/ericsizemore/bench/compare/v3.0.0...v3.0.1. 
+you can use the following url: https://github.com/ericsizemore/bench/compare/v3.0.0...v3.1.0. 
 
 Simply replace the version numbers depending on which set of changes you wish to see.
 
-### Unreleased
+### 3.1.0 (2024-03-26)
 
   * Replace usage of `microtime` with `hrtime`
     * Noticed some potential issues that didn't make this too simple of a switch.

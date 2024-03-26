@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Bench - Micro PHP library for benchmarking.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   3.0.0
+ * @version   3.1.0
  * @copyright (C) 2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *

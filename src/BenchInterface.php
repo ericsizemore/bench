@@ -111,11 +111,11 @@ interface BenchInterface
     /**
      * Returns a human-readable elapsed time.
      *
-     * @param   float        $microtime  The microtime that needs formatted.
+     * @param   float        $seconds    Time (in seconds) that needs formatted.
      * @param   string|null  $format     The format to display (printf format).
      * @param   int          $round      Rounding precision (decimals).
      */
-    public static function readableElapsedTime(float $microtime, string | null $format = null, int $round = 3): string;
+    public static function readableElapsedTime(float $seconds, string | null $format = null, int $round = 3): string;
 
     /**
      * Checks if a bench has ended.

@@ -6,9 +6,13 @@ you can use the following url: https://github.com/ericsizemore/bench/compare/v3.
 
 Simply replace the version numbers depending on which set of changes you wish to see.
 
-### 3.1.0 ()
+### Unreleased
 
   * Replace usage of `microtime` with `hrtime`
+    * Noticed some potential issues that didn't make this too simple of a switch.
+  * Reworked `readableElapsedTime` (in both `Bench` and `BenchInterface`) and `getTime`.
+    * `readableElapsedTime` now accepts time as seconds, which is derived by `$endTime - $startTime / 1e9`.
+      * Due to this, the named argument `$microtime` is now `$seconds`.
 
 ### 3.0.0 (2024-02-09)
 

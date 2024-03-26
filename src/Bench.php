@@ -58,12 +58,12 @@ use function sprintf;
 class Bench implements BenchInterface
 {
     /**
-     * Start microtime.
+     * Start time in nanoseconds.
      */
     protected float $startTime;
 
     /**
-     * End microtime.
+     * End time in nanoseconds.
      */
     protected float $endTime;
 
@@ -108,7 +108,8 @@ class Bench implements BenchInterface
             throw new LogicException('Bench has not been ended. Call end() first.');
         }
 
-        $elapsed = ($this->endTime - $this->startTime) / 1_000_000;
+        // Convert to seconds
+        $elapsed = ($this->endTime - $this->startTime) / 1e9;
 
         if ($readable) {
             return $elapsed;
@@ -190,17 +191,17 @@ class Bench implements BenchInterface
     /**
      * {@inheritdoc}
      */
-    public static function readableElapsedTime(float $microtime, string | null $format = null, int $round = 3): string
+    public static function readableElapsedTime(float $seconds, string | null $format = null, int $round = 3): string
     {
         $format ??= '%.3f%s';
 
-        if ($microtime >= 1) {
-            return sprintf($format, round($microtime, $round), 's');
+        if ($seconds >= 1) {
+            return sprintf($format, round($seconds, $round), 's');
         }
 
         $format = (string) preg_replace('/(%.\d+f)/', '%d', $format);
 
-        return sprintf($format, round($microtime * 1000), 'ms');
+        return sprintf('%d%s', round($seconds * 1000, $round), 'ms');
     }
 
     /**

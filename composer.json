@@ -33,6 +33,7 @@
         "php": "^8.2 <8.5"
     },
     "require-dev": {
+        "esi/phpunit-coverage-check": "^1.0",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
@@ -56,6 +57,7 @@
         }
     },
     "scripts": {
+        "coverage-check": "vendor/bin/coverage-check coverage:check build/logs/clover.xml 100 --ansi",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
         "test": "phpunit"
     }

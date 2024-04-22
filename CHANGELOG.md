@@ -20,6 +20,8 @@ Simply replace the version numbers depending on which set of changes you wish to
   * The `startTime`, `endTime`, and `memoryUsage` properties of `Bench` are now initialized with default values.
     * `hasStarted()` and `hasEnded()` now check for default value, instead of an `isset` check.
   * Fixes to resolve issues reported by Psalm.
+  * Update README to split CONTRIBUTING information to its own file.
+  * Add CODE OF CONDUCT.
 
 ### 3.1.0 (2024-03-26)
 

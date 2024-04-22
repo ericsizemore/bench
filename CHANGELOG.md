@@ -1,29 +1,40 @@
-## CHANGELOG
-A not so exhaustive list of changes for each release.
+# Changelog
 
-For a more detailed listing of changes between each version, 
-you can use the following url: https://github.com/ericsizemore/bench/compare/v3.0.0...v3.1.0. 
+All notable changes to this project will be documented in this file.
 
-Simply replace the version numbers depending on which set of changes you wish to see.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Unreleased
+## Unreleased
+
+### Added
 
   * Added new dev dependencies:
     * PHP-CS-Fixer
     * vimeo/psalm
+  * Added new workflow for psalm
+  * Added new Issue and Pull Request templates.
+  * Added `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`
+
+### Changed
+
   * Updated dev dependencies:
     * esi/phpunit-coverage-check
     * PHPUnit
-  * Added new workflow for psalm
-  * Added new Issue and Pull Request templates.
   * Updated source files to make the header docblock more compact.
   * The `startTime`, `endTime`, and `memoryUsage` properties of `Bench` are now initialized with default values.
     * `hasStarted()` and `hasEnded()` now check for default value, instead of an `isset` check.
-  * Fixes to resolve issues reported by Psalm.
-  * Update README to split CONTRIBUTING information to its own file.
-  * Add CODE OF CONDUCT.
+  * Update `README.md` to split contributing information to its own file.
+  * Updated this changelog to more closely follow the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 
-### 3.1.0 (2024-03-26)
+### Fix
+
+  * Fixes to resolve issues reported by Psalm.
+
+
+## [3.1.0] - 2024-03-26
+
+### Changed
 
   * Replace usage of `microtime` with `hrtime`
     * Noticed some potential issues that didn't make this too simple of a switch.
@@ -31,25 +42,36 @@ Simply replace the version numbers depending on which set of changes you wish to
     * `readableElapsedTime` now accepts time as seconds, which is derived by `$endTime - $startTime / 1e9`.
       * Due to this, the named argument `$microtime` is now `$seconds`.
 
-### 3.0.0 (2024-02-09)
 
-  * Forked from [`devster/ubench`](https://github.com/devster/ubench) Version 2.1
-  * Initial release for `Esi\Bench` will therefore be `3.0.0`.
+## [3.0.0] - 2024-02-09
 
-  * Changes made in `Esi\Bench` in comparison to the original `devster/ubench`
-    * Bumped PHP version requirement to 8.2
-    * Added namespace `Esi\Bench` for the main class.
-    * Added namespace `Esi\Bench\Tests` for the unit tests.
-    * Renamed from `Ubench` to simply `Bench`
-    * Added the `BenchInterface` interface.
-    * Added dev-dependencies for:
-      * PHPStan
-        * PHPStan PHPUnit
-        * PHPStan Strict Rules
-    * Updated PHPUnit to `11.x` and updated the unit tests and `phpunit.xml` config.
-    * Created imports for all used functions and class names.
-    * Added Github workflows for testing and static analysis.
-    * CS fixes and a bit of refactoring.
-    * Updated README.md
-    * Added LICENSE.md
-    * Added SECURITY.md
+This initial release is forked from [`devster/ubench v2.1`](https://github.com/devster/ubench) by [Jeremy Perret](https://github.com/devster).
+This is the CHANGELOG for changes in comparison to the original library.
+
+Initial release for `Esi\Bench` is set to `3.0.0`.
+
+### Added
+
+  * Added namespace `Esi\Bench` for the main class.
+  * Added namespace `Esi\Bench\Tests` for the unit tests.
+  * Added the `BenchInterface` interface.
+  * Added dev-dependencies for:
+    * PHPStan
+      * PHPStan PHPUnit
+      * PHPStan Strict Rules
+  * Added Github workflows for testing and static analysis.
+  * Added LICENSE.md
+  * Added SECURITY.md
+
+### Changed
+
+  * Bumped PHP version requirement to 8.2
+  * Renamed from `Ubench` to simply `Bench`
+  * Updated PHPUnit to `11.x` and updated the unit tests and `phpunit.xml` config.
+  * Created imports for all used functions and class names.
+  * Updated README.md
+  * CS fixes and a bit of refactoring.
+
+[unreleased]: https://github.com/ericsizemore/bench/tree/master
+[3.1.0]: https://github.com/ericsizemore/bench/releases/tag/v3.1.0
+[3.0.0]: https://github.com/ericsizemore/bench/releases/tag/v3.0.0

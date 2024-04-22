@@ -33,11 +33,15 @@
         "php": "^8.2 <8.5"
     },
     "require-dev": {
-        "esi/phpunit-coverage-check": "^1.0",
+        "esi/phpunit-coverage-check": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.54",
         "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan-deprecation-rules": "^1.2",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^11.0"
+        "phpunit/phpunit": "^11.1",
+        "psalm/plugin-phpunit": "^0.19.0",
+        "vimeo/psalm": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -57,8 +61,11 @@
         }
     },
     "scripts": {
-        "coverage-check": "vendor/bin/coverage-check coverage:check build/logs/clover.xml 100 --ansi",
+        "coverage-check": "vendor/bin/coverage-check build/logs/clover.xml 100",
+        "cs:check": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
+        "cs:fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "psalm": "vendor/bin/psalm -c psalm.xml --no-diff --stats",
         "test": "phpunit"
     }
 }

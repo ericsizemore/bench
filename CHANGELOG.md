@@ -6,6 +6,21 @@ you can use the following url: https://github.com/ericsizemore/bench/compare/v3.
 
 Simply replace the version numbers depending on which set of changes you wish to see.
 
+### Unreleased
+
+  * Added new dev dependencies:
+    * PHP-CS-Fixer
+    * vimeo/psalm
+  * Updated dev dependencies:
+    * esi/phpunit-coverage-check
+    * PHPUnit
+  * Added new workflow for psalm
+  * Added new Issue and Pull Request templates.
+  * Updated source files to make the header docblock more compact.
+  * The `startTime`, `endTime`, and `memoryUsage` properties of `Bench` are now initialized with default values.
+    * `hasStarted()` and `hasEnded()` now check for default value, instead of an `isset` check.
+  * Fixes to resolve issues reported by Psalm.
+
 ### 3.1.0 (2024-03-26)
 
   * Replace usage of `microtime` with `hrtime`

@@ -3,35 +3,15 @@
 declare(strict_types=1);
 
 /**
- * Bench - Micro PHP library for benchmarking.
+ * This file is part of Esi\Bench.
  *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @version   3.1.0
- * @copyright (C) 2024 Eric Sizemore
- * @license   The MIT License (MIT)
+ * (c) Eric Sizemore <admin@secondversion.com>
+ * (c) Jeremy Perret <jeremy@devster.org>
  *
- * Copyright (C) 2024 Eric Sizemore<https://www.secondversion.com/>.
- * Copyright (C) 2012-2020 Jeremy Perret<jeremy@devster.org>
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This source file is subject to the MIT license. For the full copyright,
+ * license information, and credits/acknowledgements, please view the LICENSE
+ * and README files that were distributed with this source code.
  */
-
 /**
  * Esi\Bench is a fork of Ubench (https://github.com/devster/ubench) which is:
  *     Copyright (c) 2012-2020 Jeremy Perret<jeremy@devster.org>
@@ -52,11 +32,172 @@ use function sleep;
 
 /**
  * Bench tests.
+ *
  * @internal
  */
 #[CoversClass(Bench::class)]
 class BenchTest extends TestCase
 {
+    public function testCallableWithArguments(): void
+    {
+        $bench  = new Bench();
+        $result = $bench->run(static fn (int $one, int $two): int => $one + $two, 1, 2);
+
+        self::assertSame(3, $result);
+    }
+
+    public function testCallableWithoutArguments(): void
+    {
+        $bench  = new Bench();
+        $result = $bench->run(static fn (): true => true);
+
+        self::assertTrue($result);
+    }
+
+    public function testEndException(): void
+    {
+        $this->expectException(LogicException::class);
+        $bench = new Bench();
+        $bench->end();
+    }
+
+    public function testGetMemoryPeak(): void
+    {
+        $bench = new Bench();
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getMemoryPeak();
+        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $actual);
+
+        self::assertIsInt($bench->getMemoryPeak(true));
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getMemoryPeak(false, '%d%s');
+        self::assertMatchesRegularExpression('/^\d+MB/', $actual);
+    }
+
+    public function testGetMemoryUsage(): void
+    {
+        $bench = new Bench();
+        $bench->start();
+        $bench->end();
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getMemoryUsage();
+        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $actual);
+
+        self::assertIsInt($bench->getMemoryUsage(true));
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getMemoryUsage(false, '%d%s');
+        self::assertMatchesRegularExpression('/^\d+MB/', $actual);
+    }
+
+    public function testGetMemoryUsageWithoutEnd(): void
+    {
+        $this->expectException(LogicException::class);
+        $bench = new Bench();
+        $bench->start();
+        $bench->getMemoryUsage();
+    }
+
+    public function testGetMemoryUsageWithoutStart(): void
+    {
+        $this->expectException(LogicException::class);
+        $bench = new Bench();
+        $bench->getMemoryUsage();
+    }
+
+    public function testGetTime(): void
+    {
+        $bench = new Bench();
+        $bench->start();
+        $bench->end();
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getTime();
+        self::assertMatchesRegularExpression('/^[0-9.]+ms/', $actual);
+
+        $bench = new Bench();
+        $bench->start();
+        sleep(2);
+        $bench->end();
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getTime();
+        self::assertMatchesRegularExpression('/^[0-9.]+s/', $actual);
+
+        self::assertIsFloat($bench->getTime(true));
+
+        /**
+         * @psalm-var string $actual
+         */
+        $actual = $bench->getTime(false, '%d%s');
+        self::assertMatchesRegularExpression('/^\d+s/', $actual);
+    }
+
+
+    public function testGetTimeExceptionWithoutEnd(): void
+    {
+        $this->expectException(LogicException::class);
+        $bench = new Bench();
+        $bench->start();
+        $bench->getTime();
+    }
+
+    public function testGetTimeExceptionWithoutStart(): void
+    {
+        $this->expectException(LogicException::class);
+        $bench = new Bench();
+        $bench->getTime();
+    }
+
+    #[DataProvider('timeProvider')]
+    public function testReadableElapsedTime(string $expected, float $time): void
+    {
+        self::assertSame($expected, Bench::readableElapsedTime($time, '%.3f%s'));
+    }
+
+    #[DataProvider('sizeProvider')]
+    public function testReadableSize(string $expected, int $size, string | null $format): void
+    {
+        self::assertSame($expected, Bench::readableSize($size, $format));
+    }
+
+    public function testWasEnd(): void
+    {
+        $bench = new Bench();
+        $bench->start();
+
+        self::assertFalse($bench->hasEnded());
+        $bench->end();
+        self::assertTrue($bench->hasEnded());
+    }
+
+    public function testWasStart(): void
+    {
+        $bench = new Bench();
+
+        self::assertFalse($bench->hasStarted());
+        $bench->start();
+        self::assertTrue($bench->hasStarted());
+    }
+
+    /**
+     * @psalm-api
+     */
     public static function sizeProvider(): Iterator
     {
         yield ['90B', 90, null];
@@ -74,132 +215,12 @@ class BenchTest extends TestCase
         yield ['9.095TB', 10000000000000, '%.3f%s'];
     }
 
-    #[DataProvider('sizeProvider')]
-    public function testReadableSize(string $expected, int $size, string | null $format): void
-    {
-        self::assertSame($expected, Bench::readableSize($size, $format));
-    }
-
+    /**
+     * @psalm-api
+     */
     public static function timeProvider(): Iterator
     {
         yield ['900ms', 0.9004213];
         yield ['1.156s', 1.1557845];
-    }
-
-    #[DataProvider('timeProvider')]
-    public function testReadableElapsedTime(string $expected, float $time): void
-    {
-        self::assertSame($expected, Bench::readableElapsedTime($time, '%.3f%s'));
-    }
-
-    public function testGetTime(): void
-    {
-        $bench = new Bench();
-        $bench->start();
-        $bench->end();
-
-        self::assertMatchesRegularExpression('/^[0-9.]+ms/', $bench->getTime());
-
-        $bench = new Bench();
-        $bench->start();
-        sleep(2);
-        $bench->end();
-
-        self::assertMatchesRegularExpression('/^[0-9.]+s/', $bench->getTime());
-        self::assertIsFloat($bench->getTime(true));
-        self::assertMatchesRegularExpression('/^\d+s/', $bench->getTime(false, '%d%s'));
-    }
-
-    public function testGetMemoryUsage(): void
-    {
-        $bench = new Bench();
-        $bench->start();
-        $bench->end();
-
-        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $bench->getMemoryUsage());
-        self::assertIsInt($bench->getMemoryUsage(true));
-        self::assertMatchesRegularExpression('/^\d+MB/', $bench->getMemoryUsage(false, '%d%s'));
-    }
-
-    public function testGetMemoryPeak(): void
-    {
-        $bench = new Bench();
-
-        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $bench->getMemoryPeak());
-        self::assertIsInt($bench->getMemoryPeak(true));
-        self::assertMatchesRegularExpression('/^\d+MB/', $bench->getMemoryPeak(false, '%d%s'));
-    }
-
-    public function testCallableWithoutArguments(): void
-    {
-        $bench  = new Bench();
-        $result = $bench->run(static fn (): true => true);
-
-        self::assertTrue($result);
-    }
-
-    public function testCallableWithArguments(): void
-    {
-        $bench  = new Bench();
-        $result = $bench->run(static fn (int $one, int $two): int => $one + $two, 1, 2);
-
-        self::assertSame(3, $result);
-    }
-
-    public function testWasStart(): void
-    {
-        $bench = new Bench();
-
-        self::assertFalse($bench->hasStarted());
-        $bench->start();
-        self::assertTrue($bench->hasStarted());
-    }
-
-    public function testWasEnd(): void
-    {
-        $bench = new Bench();
-        $bench->start();
-
-        self::assertFalse($bench->hasEnded());
-        $bench->end();
-        self::assertTrue($bench->hasEnded());
-    }
-
-    public function testEndException(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->end();
-    }
-
-    public function testGetTimeExceptionWithoutStart(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->getTime();
-    }
-
-
-    public function testGetTimeExceptionWithoutEnd(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->start();
-        $bench->getTime();
-    }
-
-    public function testGetMemoryUsageWithoutStart(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->getMemoryUsage();
-    }
-
-    public function testGetMemoryUsageWithoutEnd(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->start();
-        $bench->getMemoryUsage();
     }
 }

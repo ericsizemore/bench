@@ -2,4 +2,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Support question?
     url: https://github.com/ericsizemore/bench/discussions/categories/q-a
-    about: If you have any questions about configuring or using PHPUnit Coverage Check, please open a new Q&A discussion.
+    about: If you have any questions about configuring or using Bench, please open a new Q&A discussion.

@@ -146,6 +146,9 @@ class Bench implements BenchInterface
     public function run(callable $callable, mixed ...$arguments): mixed
     {
         $this->start();
+        /**
+         * @psalm-suppress MixedAssignment
+         */
         $result = $callable(...$arguments);
         $this->end();
 

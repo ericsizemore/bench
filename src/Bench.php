@@ -142,13 +142,14 @@ class Bench implements BenchInterface
 
     /**
      * @inheritDoc
+     *
+     * @psalm-template T
+     * @param T $arguments
      */
     public function run(callable $callable, mixed ...$arguments): mixed
     {
         $this->start();
-        /**
-         * @psalm-suppress MixedAssignment
-         */
+        /** @psalm-var T $result */
         $result = $callable(...$arguments);
         $this->end();
 

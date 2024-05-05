@@ -26,10 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * `hasStarted()` and `hasEnded()` now check for default value, instead of an `isset` check.
   * Update `README.md` to split contributing information to its own file.
   * Updated this changelog to more closely follow the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
+  * Update `.gitattributes` to reduce tarball size.
+  * Update `.gitignore`
 
-### Fix
+### Fixed
 
   * Fixes to resolve issues reported by Psalm.
+
+### Removed
+
+  * Removed `.php-cs-fixer.cache`, should never have been added to repo.
 
 
 ## [3.1.0] - 2024-03-26

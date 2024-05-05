@@ -40,31 +40,31 @@ interface BenchInterface
      * Returns the memory peak, readable or not.
      *
      * @param bool        $readable Whether the result must be human-readable.
-     * @param string|null $format   The format to display (printf format).
+     * @param null|string $format   The format to display (printf format).
      */
-    public function getMemoryPeak(bool $readable = false, string | null $format = null): string | int;
+    public function getMemoryPeak(bool $readable = false, null|string $format = null): int|string;
 
     /**
      * Returns the memory usage at the end checkpoint.
      *
      * @param bool        $readable Whether the result must be human-readable.
-     * @param string|null $format   The format to display (printf format).
+     * @param null|string $format   The format to display (printf format).
      *
      * @throws LogicException Should be thrown if end() and/or start() has not been called.
      *                        Can be checked with hasStarted() and hasEnded().
      */
-    public function getMemoryUsage(bool $readable = false, string | null $format = null): int | string;
+    public function getMemoryUsage(bool $readable = false, null|string $format = null): int|string;
 
     /**
      * Returns the elapsed time, readable or not.
      *
      * @param bool        $readable Whether the result must be human-readable.
-     * @param string|null $format   The format to display (printf format).
+     * @param null|string $format   The format to display (printf format).
      *
      * @throws LogicException Should be thrown if end() and/or start() has not been called.
      *                        Can be checked with hasStarted() and hasEnded().
      */
-    public function getTime(bool $readable = false, string | null $format = null): float | string;
+    public function getTime(bool $readable = false, null|string $format = null): float|string;
 
     /**
      * Checks if a bench has ended.
@@ -95,17 +95,17 @@ interface BenchInterface
      * Returns a human-readable elapsed time.
      *
      * @param float       $seconds Time (in seconds) that needs formatted.
-     * @param string|null $format  The format to display (printf format).
+     * @param null|string $format  The format to display (printf format).
      * @param int         $round   Rounding precision (decimals).
      */
-    public static function readableElapsedTime(float $seconds, string | null $format = null, int $round = 3): string;
+    public static function readableElapsedTime(float $seconds, null|string $format = null, int $round = 3): string;
 
     /**
      * Returns a human-readable memory size.
      *
      * @param int         $size   The size that needs formatted.
-     * @param string|null $format The format to display (printf format).
+     * @param null|string $format The format to display (printf format).
      * @param int         $round  Rounding precision (decimals).
      */
-    public static function readableSize(int $size, string | null $format = null, int $round = 3): string;
+    public static function readableSize(int $size, null|string $format = null, int $round = 3): string;
 }

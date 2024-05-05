@@ -171,7 +171,7 @@ class BenchTest extends TestCase
     }
 
     #[DataProvider('sizeProvider')]
-    public function testReadableSize(string $expected, int $size, string | null $format): void
+    public function testReadableSize(string $expected, int $size, null|string $format): void
     {
         self::assertSame($expected, Bench::readableSize($size, $format));
     }

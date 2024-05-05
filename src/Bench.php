@@ -70,7 +70,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getMemoryPeak(bool $readable = false, string | null $format = null): string | int
+    public function getMemoryPeak(bool $readable = false, null|string $format = null): int|string
     {
         $memory = memory_get_peak_usage(true);
 
@@ -84,7 +84,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getMemoryUsage(bool $readable = false, string | null $format = null): int | string
+    public function getMemoryUsage(bool $readable = false, null|string $format = null): int|string
     {
         if (!$this->hasStarted()) {
             throw new LogicException('Bench has not been started. Call start() first.');
@@ -104,7 +104,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getTime(bool $readable = false, string | null $format = null): float | string
+    public function getTime(bool $readable = false, null|string $format = null): float|string
     {
         if (!$this->hasStarted()) {
             throw new LogicException('Bench has not been started. Call start() first.');
@@ -144,6 +144,7 @@ class Bench implements BenchInterface
      * @inheritDoc
      *
      * @psalm-template T
+     *
      * @param T $arguments
      */
     public function run(callable $callable, mixed ...$arguments): mixed
@@ -167,7 +168,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public static function readableElapsedTime(float $seconds, string | null $format = null, int $round = 3): string
+    public static function readableElapsedTime(float $seconds, null|string $format = null, int $round = 3): string
     {
         $format ??= '%.3f%s';
 
@@ -183,7 +184,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public static function readableSize(int $size, string | null $format = null, int $round = 3): string
+    public static function readableSize(int $size, null|string $format = null, int $round = 3): string
     {
         /**
          * @psalm-var array<array-key, string> $units
@@ -193,7 +194,7 @@ class Bench implements BenchInterface
         /**
          * @psalm-var int $mod
          */
-        static $mod   = 1024;
+        static $mod = 1024;
 
         $format ??= '%.2f%s';
 

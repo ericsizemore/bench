@@ -1,0 +1,107 @@
+name: "Continuous Integration"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COMPOSER_ROOT_VERSION: "3.99.99"
+
+jobs:
+  phpstan:
+    name: "PHPStan Static Analysis ${{ matrix.php }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '8.2', '8.3' ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Install PHP ${{ matrix.php }}"
+        uses: shivammathur/setup-php@master
+        with:
+           php-version: ${{ matrix.php }}
+           extensions: mbstring
+
+      - name: "Validate composer.json and composer.lock"
+        run: composer validate --strict
+
+      - name: "Setup Composer, install dependencies"
+        uses: ramsey/composer-install@v3
+        with:
+           composer-options: "--prefer-dist --optimize-autoloader"
+           require-lock-file: "true"
+
+      - name: "Run PHPStan"
+        run: composer run-script phpstan
+
+  psalm:
+    name: "Psalm"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Psalm Analysis"
+        uses: docker://vimeo/psalm-github-actions:latest
+        with:
+          args: --shepherd
+          composer_require_dev: true
+          security_analysis: true
+          report_file: results.sarif
+
+      - name: "Upload Security Analysis results to GitHub"
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+
+  unit-test:
+    name: "Run Unit Tests ${{ matrix.php }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '8.2', '8.3' ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+           fetch-depth: 10
+
+      - name: "Install PHP ${{ matrix.php }}"
+        uses: shivammathur/setup-php@master
+        with:
+           php-version: ${{ matrix.php }}
+           extensions: mbstring,
+           coverage: xdebug
+
+      - name: "Validate composer.json and composer.lock"
+        run: composer validate --strict
+
+      - name: "Setup Composer, install dependencies"
+        uses: ramsey/composer-install@v3
+        with:
+           composer-options: "--prefer-dist --optimize-autoloader"
+           require-lock-file: "true"
+
+      - name: "Run test suite"
+        run: composer run-script test
+
+      - name: "Coverage check"
+        run: composer run-script coverage-check
+
+      - uses: sudo-bot/action-scrutinizer@latest
+        with:
+           cli-args: "--format=php-clover build/logs/clover.xml"
+
+      - name: "Upload coverage reports to Codecov"
+        uses: codecov/codecov-action@v4.4.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: ericsizemore/bench

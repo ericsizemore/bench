@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Added new dev dependencies:
     * PHP-CS-Fixer
     * vimeo/psalm
-  * Added new workflow for psalm
   * Added new Issue and Pull Request templates.
   * Added `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`
 
@@ -28,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Updated this changelog to more closely follow the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
   * Update `.gitattributes` to reduce tarball size.
   * Update `.gitignore`
+  * Workflows combined into `continuous-integration.yml`
 
 ### Fixed
 
@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
   * Removed `.php-cs-fixer.cache`, should never have been added to repo.
+  * Removed workflows: `main.yml`, `psalm.yml` and `tests.yml`
 
 
 ## [3.1.0] - 2024-03-26

@@ -35,6 +35,7 @@ jobs:
           mkdir build
           cd build
           wget https://raw.githubusercontent.com/ericsizemore/ericsizemore/main/scripts/extract-release-notes.php
+          chmod +x extract-release-notes.php
 
       - name: "Parse ChangeLog"
         run: build/extract-release-notes.php ${{ env.RELEASE_TAG }} > RELEASE_NOTES.md

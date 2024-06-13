@@ -30,15 +30,8 @@ jobs:
       - name: "Determine tag"
         run: echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: "Download script to extract notes"
-        run: |
-          mkdir build
-          chmod -R g+w build
-          cd build
-          wget https://raw.githubusercontent.com/ericsizemore/ericsizemore/main/scripts/extract-release-notes.php
-
       - name: "Parse ChangeLog"
-        run: php build/extract-release-notes.php ${{ env.RELEASE_TAG }} > RELEASE_NOTES.md
+        run: build/extract-release-notes.php ${{ env.RELEASE_TAG }} > RELEASE_NOTES.md
 
       - name: "Create release"
         uses: ncipollo/release-action@v1

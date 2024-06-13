@@ -1,3 +1,4 @@
 vendor/
-build/
+build/logs/
+build/phpunit/
 .php-cs-fixer.cache

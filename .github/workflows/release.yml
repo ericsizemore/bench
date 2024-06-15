@@ -30,8 +30,12 @@ jobs:
       - name: "Determine tag"
         run: echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: "Parse ChangeLog"
-        run: build/extract-release-notes.php ${{ env.RELEASE_TAG }} > RELEASE_NOTES.md
+      - name: "Get latest release info"
+        id: query-release-info
+        uses: release-flow/keep-a-changelog-action@v2
+        with:
+           command: query
+           version: ${{ env.RELEASE_TAG }}
 
       - name: "Create release"
         uses: ncipollo/release-action@v1
@@ -39,4 +43,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.RELEASE_TAG }}
           name: ${{ env.RELEASE_TAG }}
-          bodyFile: RELEASE_NOTES.md
+          body: "${{ steps.query-release-info.outputs.release-notes }}"

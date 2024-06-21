@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+The library has been refactored, with numerous changes. See [UPGRADING](/.UPGRADING.md) for more information.
+
+### Added
+
+  * (feat) `Contracts`
+    * `BenchInterface`
+    * `TimerInterface`
+  * (feat) ` Exceptions`
+    * `BaseException` which extends `LogicException`.
+    * `ExceptionInterface`
+    * `TimerAlreadyStartedException`
+    * `TimerDoesNotExistException`
+    * `TimerNotStartedException`
+    * `TimerNotStartedOrIsStoppedException`
+  * (feat) `Timer` class which holds timer data for each new Timer added.
+  * (feat) `Utils` class which holds utility functions.
+  * (feat) The ability to add named timers and run laps. Adds:
+    * `Bench::getLapTimes()`
+    * `Bench::getElapsedTime()`
+  * Added upgrade information in [UPGRADING](./UPGRADING.md).
+
+### Changed
+
+  * `readableElapsedTime()` and `readableSize()` were extracted to the new `Utils` class.
+  * `end()` changed to `stop()`
+  * Methods no longer throw `LogicException`, will instead be one of the new `Exceptions` listed above.
+  * `BenchInterface` has been updated to be inline with the `Bench` changes.
+  * Unit tests have been updated.
+
+### Removed
+
+  * `Bench::run()` which allowed running a bench with a given callable has been removed, with no current replacement.
+  * `Bench::hasStarted()`, `Bench::hasEnded()`, and `Bench::getTime()`
+
+
 ## [3.1.1] - 2024-06-13
 
 ### Added

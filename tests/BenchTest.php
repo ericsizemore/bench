@@ -12,23 +12,18 @@ declare(strict_types=1);
  * license information, and credits/acknowledgements, please view the LICENSE
  * and README files that were distributed with this source code.
  */
-/**
- * Esi\Bench is a fork of Ubench (https://github.com/devster/ubench) which is:
- *     Copyright (c) 2012-2020 Jeremy Perret<jeremy@devster.org>
- *
- * For a list of changes in this library, in comparison to the original library, please {@see CHANGELOG.md}.
- */
 
 namespace Esi\Bench\Tests;
 
 use Esi\Bench\Bench;
-use Iterator;
-use LogicException;
+use Esi\Bench\Exceptions\TimerAlreadyStartedException;
+use Esi\Bench\Exceptions\TimerDoesNotExistException;
+use Esi\Bench\Exceptions\TimerNotStartedException;
+use Esi\Bench\Timer;
+use Esi\Bench\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-
-use function sleep;
 
 /**
  * Bench tests.
@@ -36,191 +31,136 @@ use function sleep;
  * @internal
  */
 #[CoversClass(Bench::class)]
+#[UsesClass(Timer::class)]
+#[UsesClass(Utils::class)]
 class BenchTest extends TestCase
 {
-    public function testCallableWithArguments(): void
-    {
-        $bench  = new Bench();
-        $result = $bench->run(static fn (int $one, int $two): int => $one + $two, 1, 2);
-
-        self::assertSame(3, $result);
-    }
-
-    public function testCallableWithoutArguments(): void
-    {
-        $bench  = new Bench();
-        $result = $bench->run(static fn (): true => true);
-
-        self::assertTrue($result);
-    }
-
-    public function testEndException(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->end();
-    }
-
-    public function testGetMemoryPeak(): void
+    public function testGetElapsedTime(): void
     {
         $bench = new Bench();
+        $bench->start('testTimer');
+        $bench->stop('testTimer');
+        $elapsed = $bench->getElapsedTime('testTimer');
+        self::assertGreaterThan(0, $elapsed);
+    }
+
+    public function testGetElapsedTimeException(): void
+    {
+        $this->expectException(TimerDoesNotExistException::class);
+        $bench = new Bench();
+        $bench->getElapsedTime('nonexistentTimer');
+    }
+
+    public function testGetElapsedTimeReadable(): void
+    {
+        $bench = new Bench();
+        $bench->start('testTimer');
+        $bench->stop('testTimer');
+        $elapsed = $bench->getElapsedTime('testTimer', true);
+        self::assertMatchesRegularExpression('/^[0-9.]+ms/', $elapsed);
+    }
+
+    public function testGetLapTimes(): void
+    {
+        $bench = new Bench();
+        $bench->start('testTimer');
+        $bench->lap('testTimer');
+        $bench->stop('testTimer');
+        $laps = $bench->getLapTimes('testTimer');
+
+        self::assertCount(2, $laps);
+
+        foreach ($laps as $lap) {
+            self::assertIsFloat($lap);
+        }
+    }
+
+    public function testGetLapTimesException(): void
+    {
+        $this->expectException(TimerDoesNotExistException::class);
+        $bench = new Bench();
+        $bench->getLapTimes('nonexistentTimer');
+    }
+
+    public function testGetLapTimesReadable(): void
+    {
+        $bench = new Bench();
+        $bench->start('testTimer');
+        $bench->lap('testTimer');
+        $bench->stop('testTimer');
+        $laps = $bench->getLapTimes('testTimer', true);
+
+        self::assertCount(2, $laps);
 
         /**
-         * @psalm-var string $actual
+         * @var string $lap
          */
-        $actual = $bench->getMemoryPeak();
-        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $actual);
-
-        self::assertIsInt($bench->getMemoryPeak(true));
-
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getMemoryPeak(false, '%d%s');
-        self::assertMatchesRegularExpression('/^\d+MB/', $actual);
+        foreach ($laps as $lap) {
+            self::assertMatchesRegularExpression('/^[0-9.]+ms/', $lap);
+        }
     }
 
     public function testGetMemoryUsage(): void
     {
         $bench = new Bench();
-        $bench->start();
-        $bench->end();
-
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getMemoryUsage();
-        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $actual);
-
-        self::assertIsInt($bench->getMemoryUsage(true));
-
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getMemoryUsage(false, '%d%s');
-        self::assertMatchesRegularExpression('/^\d+MB/', $actual);
+        $bench->start('testTimer');
+        $bench->stop('testTimer');
+        $memory = $bench->getMemoryUsage('testTimer');
+        self::assertGreaterThan(0, $memory);
     }
 
-    public function testGetMemoryUsageWithoutEnd(): void
+    public function testGetMemoryUsageException(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(TimerDoesNotExistException::class);
         $bench = new Bench();
-        $bench->start();
-        $bench->getMemoryUsage();
+        $bench->getMemoryUsage('nonexistentTimer');
     }
 
-    public function testGetMemoryUsageWithoutStart(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->getMemoryUsage();
-    }
-
-    public function testGetTime(): void
+    public function testGetMemoryUsageReadable(): void
     {
         $bench = new Bench();
-        $bench->start();
-        $bench->end();
+        $bench->start('testTimer');
+        $bench->stop('testTimer');
+        $memory = $bench->getMemoryUsage('testTimer', true);
+        self::assertMatchesRegularExpression('/^[0-9.]+MB/', $memory);
+    }
 
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getTime();
-        self::assertMatchesRegularExpression('/^[0-9.]+ms/', $actual);
-
+    public function testLapException(): void
+    {
+        $this->expectException(TimerNotStartedException::class);
         $bench = new Bench();
-        $bench->start();
-        sleep(2);
-        $bench->end();
-
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getTime();
-        self::assertMatchesRegularExpression('/^[0-9.]+s/', $actual);
-
-        self::assertIsFloat($bench->getTime(true));
-
-        /**
-         * @psalm-var string $actual
-         */
-        $actual = $bench->getTime(false, '%d%s');
-        self::assertMatchesRegularExpression('/^\d+s/', $actual);
+        $bench->lap('testTimer');
     }
 
-
-    public function testGetTimeExceptionWithoutEnd(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->start();
-        $bench->getTime();
-    }
-
-    public function testGetTimeExceptionWithoutStart(): void
-    {
-        $this->expectException(LogicException::class);
-        $bench = new Bench();
-        $bench->getTime();
-    }
-
-    #[DataProvider('timeProvider')]
-    public function testReadableElapsedTime(string $expected, float $time): void
-    {
-        self::assertSame($expected, Bench::readableElapsedTime($time, '%.3f%s'));
-    }
-
-    #[DataProvider('sizeProvider')]
-    public function testReadableSize(string $expected, int $size, null|string $format): void
-    {
-        self::assertSame($expected, Bench::readableSize($size, $format));
-    }
-
-    public function testWasEnd(): void
+    public function testLapTimer(): void
     {
         $bench = new Bench();
-        $bench->start();
-
-        self::assertFalse($bench->hasEnded());
-        $bench->end();
-        self::assertTrue($bench->hasEnded());
+        $bench->start('testTimer');
+        $bench->lap('testTimer');
+        $bench->stop('testTimer');
+        self::assertCount(2, $bench->getLapTimes('testTimer'));
     }
 
-    public function testWasStart(): void
+    public function testStartAndStopTimer(): void
     {
         $bench = new Bench();
-
-        self::assertFalse($bench->hasStarted());
-        $bench->start();
-        self::assertTrue($bench->hasStarted());
+        $bench->start('testTimer');
+        $bench->stop('testTimer');
+        self::assertCount(1, $bench->getLapTimes('testTimer'));
     }
 
-    /**
-     * @psalm-api
-     */
-    public static function sizeProvider(): Iterator
+    public function testStartException(): void
     {
-        yield ['90B', 90, null];
-        yield ['1024B', 1024, null];
-        yield ['1.47KB', 1500, null];
-        yield ['9.54MB', 10000000, null];
-        yield ['9.31GB', 10000000000, null];
-        yield ['9.10TB', 10000000000000, null];
-
-        yield ['90B', 90, '%.3f%s'];
-        yield ['1024B', 1024, '%.3f%s'];
-        yield ['1.465KB', 1500, '%.3f%s'];
-        yield ['9.537MB', 10000000, '%.3f%s'];
-        yield ['9.313GB', 10000000000, '%.3f%s'];
-        yield ['9.095TB', 10000000000000, '%.3f%s'];
+        $this->expectException(TimerAlreadyStartedException::class);
+        $bench = new Bench();
+        $bench->start('testTimer');
+        $bench->start('testTimer');
     }
 
-    /**
-     * @psalm-api
-     */
-    public static function timeProvider(): Iterator
+    public function testStopException(): void
     {
-        yield ['900ms', 0.9004213];
-        yield ['1.156s', 1.1557845];
+        $this->expectException(TimerNotStartedException::class);
+        $bench = new Bench();
+        $bench->stop('testTimer');
     }
 }

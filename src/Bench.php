@@ -12,203 +12,95 @@ declare(strict_types=1);
  * license information, and credits/acknowledgements, please view the LICENSE
  * and README files that were distributed with this source code.
  */
-/**
- * Esi\Bench is a fork of Ubench (https://github.com/devster/ubench) which is:
- *     Copyright (c) 2012-2020 Jeremy Perret<jeremy@devster.org>
- *
- * For a list of changes in this library, in comparison to the original library, please {@see CHANGELOG.md}.
- */
 
 namespace Esi\Bench;
 
-use LogicException;
+use Esi\Bench\Contracts\BenchInterface;
+use Esi\Bench\Exceptions\TimerAlreadyStartedException;
+use Esi\Bench\Exceptions\TimerDoesNotExistException;
+use Esi\Bench\Exceptions\TimerNotStartedException;
 
-use function hrtime;
-use function memory_get_peak_usage;
-use function memory_get_usage;
-use function preg_replace;
-use function round;
 use function sprintf;
 
-/**
- * Micro PHP library for benchmarking.
- *
- * @see Tests\BenchTest
- */
 class Bench implements BenchInterface
 {
     /**
-     * End time in nanoseconds.
-     */
-    protected float $endTime = 0.0;
-
-    /**
-     * Memory usage.
-     */
-    protected int $memoryUsage = 0;
-
-    /**
-     * Start time in nanoseconds.
-     */
-    protected float $startTime = 0.0;
-
-    /**
-     * @inheritDoc
-     */
-    public function end(): self
-    {
-        if (!$this->hasStarted()) {
-            throw new LogicException('Bench has not been started. Call start() first.');
-        }
-
-        $this->endTime     = hrtime(true);
-        $this->memoryUsage = memory_get_usage(true);
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getMemoryPeak(bool $readable = false, null|string $format = null): int|string
-    {
-        $memory = memory_get_peak_usage(true);
-
-        if ($readable) {
-            return $memory;
-        }
-
-        return self::readableSize($memory, $format);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getMemoryUsage(bool $readable = false, null|string $format = null): int|string
-    {
-        if (!$this->hasStarted()) {
-            throw new LogicException('Bench has not been started. Call start() first.');
-        }
-
-        if (!$this->hasEnded()) {
-            throw new LogicException('Bench has not been ended. Call end() first.');
-        }
-
-        if ($readable) {
-            return $this->memoryUsage;
-        }
-
-        return self::readableSize($this->memoryUsage, $format);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTime(bool $readable = false, null|string $format = null): float|string
-    {
-        if (!$this->hasStarted()) {
-            throw new LogicException('Bench has not been started. Call start() first.');
-        }
-
-        if (!$this->hasEnded()) {
-            throw new LogicException('Bench has not been ended. Call end() first.');
-        }
-
-        // Convert to seconds
-        $elapsed = ($this->endTime - $this->startTime) / 1e9;
-
-        if ($readable) {
-            return $elapsed;
-        }
-
-        return self::readableElapsedTime($elapsed, $format);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function hasEnded(): bool
-    {
-        return $this->endTime !== 0.0;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function hasStarted(): bool
-    {
-        return $this->startTime !== 0.0;
-    }
-
-    /**
-     * @inheritDoc
+     * Array to hold multiple timers, identified by name.
      *
-     * @psalm-template T
-     *
-     * @param T $arguments
+     * @var array<string, Timer>
      */
-    public function run(callable $callable, mixed ...$arguments): mixed
-    {
-        $this->start();
-        /** @psalm-var T $result */
-        $result = $callable(...$arguments);
-        $this->end();
-
-        return $result;
-    }
+    protected array $timers = [];
 
     /**
      * @inheritDoc
      */
-    public function start(): void
+    public function getElapsedTime(string $name = 'default', bool $readable = false, ?string $format = null): float|string
     {
-        $this->startTime = hrtime(true);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function readableElapsedTime(float $seconds, null|string $format = null, int $round = 3): string
-    {
-        $format ??= '%.3f%s';
-
-        if ($seconds >= 1) {
-            return sprintf($format, round($seconds, $round), 's');
+        if (!isset($this->timers[$name])) {
+            throw new TimerDoesNotExistException(sprintf("Timer '%s' does not exist.", $name));
         }
 
-        $format = (string) preg_replace('/(%.\d+f)/', '%d', $format);
-
-        return sprintf($format, round($seconds * 1000, $round), 'ms');
+        return $this->timers[$name]->getElapsedTime($readable, $format);
     }
 
     /**
      * @inheritDoc
      */
-    public static function readableSize(int $size, null|string $format = null, int $round = 3): string
+    public function getLapTimes(string $name = 'default', bool $readable = false, ?string $format = null): array
     {
-        /**
-         * @psalm-var array<array-key, string> $units
-         */
-        static $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-
-        /**
-         * @psalm-var int $mod
-         */
-        static $mod = 1024;
-
-        $format ??= '%.2f%s';
-
-        if ($size <= $mod) {
-            return sprintf('%dB', round($size, $round));
+        if (!isset($this->timers[$name])) {
+            throw new TimerDoesNotExistException(sprintf("Timer '%s' does not exist.", $name));
         }
 
-        $unit = 0;
+        return $this->timers[$name]->getLapTimes($readable, $format);
+    }
 
-        do {
-            ++$unit;
-            $size /= $mod;
-        } while($size > $mod);
+    /**
+     * @inheritDoc
+     */
+    public function getMemoryUsage(string $name = 'default', bool $readable = false, ?string $format = null): int|string
+    {
+        if (!isset($this->timers[$name])) {
+            throw new TimerDoesNotExistException(sprintf("Timer '%s' does not exist.", $name));
+        }
 
-        return sprintf($format, round($size, $round), $units[$unit]);
+        return $this->timers[$name]->getMemoryUsage($readable, $format);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function lap(string $name = 'default'): void
+    {
+        if (!isset($this->timers[$name])) {
+            throw new TimerNotStartedException(sprintf("Timer '%s' has not been started.", $name));
+        }
+
+        $this->timers[$name]->lap();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function start(string $name = 'default'): void
+    {
+        if (isset($this->timers[$name])) {
+            throw new TimerAlreadyStartedException(sprintf("Timer '%s' is already started. Stop it before starting it again.", $name));
+        }
+
+        $this->timers[$name] = new Timer();
+        $this->timers[$name]->start();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function stop(string $name = 'default'): void
+    {
+        if (!isset($this->timers[$name])) {
+            throw new TimerNotStartedException(sprintf("Timer '%s' has not been started.", $name));
+        }
+
+        $this->timers[$name]->stop();
     }
 }

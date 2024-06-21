@@ -27,8 +27,20 @@
         "issues": "https://github.com/ericsizemore/bench/issues",
         "forum": "https://github.com/ericsizemore/bench/discussions",
         "source": "https://github.com/ericsizemore/bench/tree/master",
+        "docs": "https://github.com/ericsizemore/bench",
+        "rss": "https://github.com/ericsizemore/bench/releases.atom",
         "security": "https://github.com/ericsizemore/bench/security/policy"
     },
+    "funding": [
+        {
+            "type": "custom",
+            "url": "https://ko-fi.com/ericsizemore"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/ericsizemore"
+        }
+    ],
     "require": {
         "php": "^8.2 <8.5"
     },
@@ -67,11 +79,25 @@
         }
     },
     "scripts": {
-        "coverage-check": "vendor/bin/coverage-check build/logs/clover.xml 100",
-        "cs:check": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
-        "cs:fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
-        "psalm": "vendor/bin/psalm -c psalm.xml --no-diff --stats",
-        "test": "phpunit"
+        "analyze": [
+            "@clear-build",
+            "@composer validate",
+            "@phpunit",
+            "@code-coverage",
+            "@psalm:shepherd",
+            "@psalm:security",
+            "@phpstan"
+        ],
+        "clear-build": "rm -rf ./build/*",
+        "code-coverage": "vendor/bin/coverage-check build/logs/clover.xml 100",
+        "phpcs:check": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
+        "phpcs:fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -vvv",
+        "phpunit": "vendor/bin/phpunit",
+        "phpunit:migrate": "@phpunit --migrate-configuration",
+        "psalm": "vendor/bin/psalm -c psalm.xml --no-cache --show-info=true",
+        "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
+        "psalm:security": "@psalm --no-diff --taint-analysis",
+        "psalm:shepherd": "@psalm --no-diff --shepherd --stats"
     }
 }

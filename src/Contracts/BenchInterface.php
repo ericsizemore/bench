@@ -15,6 +15,10 @@ declare(strict_types=1);
 
 namespace Esi\Bench\Contracts;
 
+use Esi\Bench\Exceptions\TimerAlreadyStartedException;
+use Esi\Bench\Exceptions\TimerDoesNotExistException;
+use Esi\Bench\Exceptions\TimerNotStartedException;
+
 interface BenchInterface
 {
     /**

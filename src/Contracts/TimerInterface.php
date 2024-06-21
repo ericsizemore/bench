@@ -15,6 +15,10 @@ declare(strict_types=1);
 
 namespace Esi\Bench\Contracts;
 
+use Esi\Bench\Exceptions\TimerAlreadyStartedException;
+use Esi\Bench\Exceptions\TimerDoesNotExistException;
+use Esi\Bench\Exceptions\TimerNotStartedOrIsStoppedException;
+
 interface TimerInterface
 {
     /**
@@ -23,6 +27,8 @@ interface TimerInterface
      * @template T of bool
      *
      * @param T $readable
+     *
+     * @throws TimerDoesNotExistException
      *
      * @return (T is true ? string : float)
      */
@@ -38,6 +44,8 @@ interface TimerInterface
     /**
      * Get the lap times.
      *
+     * @throws TimerDoesNotExistException
+     *
      * @return array<int, float|string>
      */
     public function getLapTimes(bool $readable = false, ?string $format = null): array;
@@ -48,6 +56,8 @@ interface TimerInterface
      * @template T of bool
      *
      * @param T $readable
+     *
+     * @throws TimerDoesNotExistException
      *
      * @return (T is true ? string : int)
      */
@@ -60,16 +70,22 @@ interface TimerInterface
 
     /**
      * Record a lap time.
+     *
+     * @throws TimerNotStartedOrIsStoppedException
      */
     public function lap(): void;
 
     /**
      * Start the timer.
+     *
+     * @throws TimerAlreadyStartedException
      */
     public function start(): void;
 
     /**
      * Stop the timer.
+     *
+     * @throws TimerNotStartedOrIsStoppedException
      */
     public function stop(): void;
 }

@@ -25,7 +25,7 @@ Thanks to them and all the contributors!
 Run the following command to install the package
 
 ```shell
-composer require esi/bench:~3.0.0
+composer require esi/bench:~4.0.0
 ```
 
 ## Usage
@@ -34,30 +34,26 @@ require_once 'vendor/autoload.php';
 
 $bench = new Bench;
 
-$bench->start();
+$bench->start('testTimer');
 
 // Execute some code
 
-$bench->end();
+// Record a lap
+$bench->lap('testTimer');
+
+// Execute more code
+
+$bench->stop('testTimer');
 
 // Get elapsed time and memory.
-echo $bench->getTime(); // 156ms or 1.123s
-echo $bench->getTime(true); // elapsed microtime in float
-echo $bench->getTime(false, '%d%s'); // 156ms or 1s
+// Get the elapsed time
+echo $bench->getElapsedTime('testTimer', true); // e.g., "2.001s"
 
-echo $bench->getMemoryPeak(); // 152B or 90.00Kb or 15.23Mb
-echo $bench->getMemoryPeak(true); // memory peak in bytes
-echo $bench->getMemoryPeak(false, '%.3f%s'); // 152B or 90.152Kb or 15.234Mb
+// Get lap times
+print_r($bench->getLapTimes('testTimer', true)); // e.g., ["1.000ms", "1.001ms"]
 
-// Returns the memory usage at the end mark.
-echo $bench->getMemoryUsage(); // 152B or 90.00Kb or 15.23Mb
-
-// Runs `Bench::start()` and `Bench::end()` around a callable.
-// Accepts a callable as the first parameter.  Any additional parameters will be passed to the callable.
-$result = $bench->run(function (int $x): int {
-    return $x;
-}, 1);
-echo $bench->getTime();
+// Get memory usage
+echo $bench->getMemoryUsage('testTimer', true); // e.g., "2.00MB"
 ```
 
 ## About

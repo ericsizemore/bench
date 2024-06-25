@@ -80,6 +80,7 @@ class TimerTest extends TestCase
         usleep(1000);
         $timer->lap();
         $timer->stop();
+
         $laps = $timer->getLapTimes();
         self::assertCount(3, $laps);
         foreach ($laps as $lap) {
@@ -103,6 +104,7 @@ class TimerTest extends TestCase
         usleep(1000);
         $timer->lap();
         $timer->stop();
+
         $laps = $timer->getLapTimes(true);
         self::assertCount(3, $laps);
 
@@ -119,6 +121,7 @@ class TimerTest extends TestCase
         $timer = new Timer();
         $timer->start();
         $timer->stop();
+
         $memory = $timer->getMemoryUsage();
         self::assertGreaterThan(0, $memory);
     }
@@ -135,6 +138,7 @@ class TimerTest extends TestCase
         $timer = new Timer();
         $timer->start();
         $timer->stop();
+
         $memory = $timer->getMemoryUsage(true);
         self::assertMatchesRegularExpression('/^[0-9.]+MB/', $memory);
     }

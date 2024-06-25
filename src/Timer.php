@@ -23,6 +23,10 @@ use Esi\Bench\Exceptions\TimerNotStartedOrIsStoppedException;
 use function hrtime;
 use function memory_get_usage;
 
+/**
+ * @see Tests\TimerTest
+ * @see Tests\TimerTest
+ */
 class Timer implements TimerInterface
 {
     /**
@@ -86,11 +90,10 @@ class Timer implements TimerInterface
             throw new TimerDoesNotExistException('Timer must be started first.');
         }
 
-        $laps         = $this->laps;
         $previousTime = $this->startTime;
         $lapTimes     = [];
 
-        foreach ($laps as $lap) {
+        foreach ($this->getLaps() as $lap) {
             $lapTime      = ($lap - $previousTime) / 1e9;
             $lapTimes[]   = $readable ? Utils::readableElapsedTime($lapTime, $format) : $lapTime;
             $previousTime = $lap;

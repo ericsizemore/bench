@@ -22,6 +22,10 @@ use Esi\Bench\Exceptions\TimerNotStartedException;
 
 use function sprintf;
 
+/**
+ * @see Tests\BenchTest
+ * @see Tests\BenchTest
+ */
 class Bench implements BenchInterface
 {
     /**
@@ -77,6 +81,23 @@ class Bench implements BenchInterface
         }
 
         $this->timers[$name]->lap();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @psalm-template T
+     *
+     * @param T $arguments
+     */
+    public function run(string $name, callable $callable, mixed ...$arguments): mixed
+    {
+        $this->start($name);
+        /** @psalm-var T $result */
+        $result = $callable(...$arguments);
+        $this->stop($name);
+
+        return $result;
     }
 
     /**

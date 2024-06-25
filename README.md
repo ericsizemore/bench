@@ -54,6 +54,16 @@ print_r($bench->getLapTimes('testTimer', true)); // e.g., ["1.000ms", "1.001ms"]
 
 // Get memory usage
 echo $bench->getMemoryUsage('testTimer', true); // e.g., "2.00MB"
+
+/**
+ * Runs `Bench::start()` and `Bench::stop()` around a callable.
+ * Accepts a name for the timer as the first parameter, and a callable as the second parameter.
+ * Any additional parameters will be passed to the callable.
+ */
+$result = $bench->run('callableTimer', static function (int $x): int {
+    return $x;
+}, 1);
+echo $bench->getElapsedTime('callableTimer');
 ```
 
 ## About

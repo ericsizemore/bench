@@ -35,11 +35,28 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(Utils::class)]
 class BenchTest extends TestCase
 {
+    public function testCallableWithArguments(): void
+    {
+        $bench  = new Bench();
+        $result = $bench->run('testTimer', static fn (int $one, int $two): int => $one + $two, 1, 2);
+
+        self::assertSame(3, $result);
+    }
+
+    public function testCallableWithoutArguments(): void
+    {
+        $bench  = new Bench();
+        $result = $bench->run('testTimer', static fn (): true => true);
+
+        self::assertTrue($result);
+    }
+
     public function testGetElapsedTime(): void
     {
         $bench = new Bench();
         $bench->start('testTimer');
         $bench->stop('testTimer');
+
         $elapsed = $bench->getElapsedTime('testTimer');
         self::assertGreaterThan(0, $elapsed);
     }
@@ -56,6 +73,7 @@ class BenchTest extends TestCase
         $bench = new Bench();
         $bench->start('testTimer');
         $bench->stop('testTimer');
+
         $elapsed = $bench->getElapsedTime('testTimer', true);
         self::assertMatchesRegularExpression('/^[0-9.]+ms/', $elapsed);
     }
@@ -66,6 +84,7 @@ class BenchTest extends TestCase
         $bench->start('testTimer');
         $bench->lap('testTimer');
         $bench->stop('testTimer');
+
         $laps = $bench->getLapTimes('testTimer');
 
         self::assertCount(2, $laps);
@@ -88,6 +107,7 @@ class BenchTest extends TestCase
         $bench->start('testTimer');
         $bench->lap('testTimer');
         $bench->stop('testTimer');
+
         $laps = $bench->getLapTimes('testTimer', true);
 
         self::assertCount(2, $laps);
@@ -105,6 +125,7 @@ class BenchTest extends TestCase
         $bench = new Bench();
         $bench->start('testTimer');
         $bench->stop('testTimer');
+
         $memory = $bench->getMemoryUsage('testTimer');
         self::assertGreaterThan(0, $memory);
     }
@@ -121,6 +142,7 @@ class BenchTest extends TestCase
         $bench = new Bench();
         $bench->start('testTimer');
         $bench->stop('testTimer');
+
         $memory = $bench->getMemoryUsage('testTimer', true);
         self::assertMatchesRegularExpression('/^[0-9.]+MB/', $memory);
     }

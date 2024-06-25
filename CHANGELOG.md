@@ -33,12 +33,12 @@ The library has been refactored, with numerous changes. See [UPGRADING](/.UPGRAD
   * `readableElapsedTime()` and `readableSize()` were extracted to the new `Utils` class.
   * `end()` changed to `stop()`
   * Methods no longer throw `LogicException`, will instead be one of the new `Exceptions` listed above.
+  * `Bench::run()` has a new parameter, `$name`.
   * `BenchInterface` has been updated to be inline with the `Bench` changes.
   * Unit tests have been updated.
 
 ### Removed
 
-  * `Bench::run()` which allowed running a bench with a given callable has been removed, with no current replacement.
   * `Bench::hasStarted()`, `Bench::hasEnded()`, and `Bench::getTime()`
 
 

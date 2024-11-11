@@ -28,7 +28,6 @@ use function memory_get_peak_usage;
 use function memory_get_usage;
 use function preg_replace;
 use function round;
-use function sprintf;
 
 /**
  * Micro PHP library for benchmarking.
@@ -173,12 +172,12 @@ class Bench implements BenchInterface
         $format ??= '%.3f%s';
 
         if ($seconds >= 1) {
-            return sprintf($format, round($seconds, $round), 's');
+            return \sprintf($format, round($seconds, $round), 's');
         }
 
         $format = (string) preg_replace('/(%.\d+f)/', '%d', $format);
 
-        return sprintf($format, round($seconds * 1000, $round), 'ms');
+        return \sprintf($format, round($seconds * 1000, $round), 'ms');
     }
 
     /**
@@ -199,7 +198,7 @@ class Bench implements BenchInterface
         $format ??= '%.2f%s';
 
         if ($size <= $mod) {
-            return sprintf('%dB', round($size, $round));
+            return \sprintf('%dB', round($size, $round));
         }
 
         $unit = 0;
@@ -207,8 +206,8 @@ class Bench implements BenchInterface
         do {
             ++$unit;
             $size /= $mod;
-        } while($size > $mod);
+        } while ($size > $mod);
 
-        return sprintf($format, round($size, $round), $units[$unit]);
+        return \sprintf($format, round($size, $round), $units[$unit]);
     }
 }

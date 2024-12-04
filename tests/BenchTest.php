@@ -148,7 +148,6 @@ class BenchTest extends TestCase
         self::assertMatchesRegularExpression('/^\d+s/', $actual);
     }
 
-
     public function testGetTimeExceptionWithoutEnd(): void
     {
         $this->expectException(LogicException::class);

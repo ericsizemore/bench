@@ -6513,12 +6513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "be0f41a19e089dd7456f0a2a85b75465bfcc978c"
+                "reference": "26941e1c83f88722bfaf767a00bf11cfad94bd23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/be0f41a19e089dd7456f0a2a85b75465bfcc978c",
-                "reference": "be0f41a19e089dd7456f0a2a85b75465bfcc978c",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/26941e1c83f88722bfaf767a00bf11cfad94bd23",
+                "reference": "26941e1c83f88722bfaf767a00bf11cfad94bd23",
                 "shasum": ""
             },
             "require": {
@@ -6546,7 +6546,7 @@
                 "spatie/array-to-xml": "^2.17.0 || ^3.0",
                 "symfony/console": "^6.0 || ^7.0",
                 "symfony/filesystem": "~6.3.12 || ~6.4.3 || ^7.0.3",
-                "symfony/polyfill-php84": "*"
+                "symfony/polyfill-php84": "^1.31.0"
             },
             "provide": {
                 "psalm/psalm": "self.version"
@@ -6623,7 +6623,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2025-02-21T09:18:19+00:00"
+            "time": "2025-03-01T13:35:54+00:00"
         },
         {
             "name": "webmozart/assert",

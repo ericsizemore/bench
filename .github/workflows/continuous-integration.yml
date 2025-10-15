@@ -101,7 +101,7 @@ jobs:
            require-lock-file: "true"
 
       - name: "Run test suite"
-        run: composer run-script test
+        run: composer run-script phpunit
 
       - name: "Coverage check"
         run: composer run-script coverage-check

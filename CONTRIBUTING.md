@@ -1,4 +1,4 @@
-# Contributing to Bench
+# Contributing to this library
 
 #### Important Note
 
@@ -6,8 +6,8 @@ The contributing guidelines for this project are heavily inspired by, and borrow
 
 ## Welcome!
 
-This project accepts contributions of code and documentation from the community. 
-These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [Bench repository](https://github.com/ericsizemore/bench).
+This project accepts contributions of code and documentation from the community.
+These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [library's repository](https://github.com/ericsizemore/bench).
 
 Here are some examples how you can contribute:
 
@@ -15,7 +15,7 @@ Here are some examples how you can contribute:
 * [Propose a new feature](https://github.com/ericsizemore/bench/issues/new?labels=enhancement,unverified&template=2-feature_request.yml)
 * [Send a pull request](https://github.com/ericsizemore/bench/pulls)
 
-I look forward to your contributions! 
+I look forward to your contributions!
 
 ## Code of Conduct
 
@@ -29,8 +29,8 @@ When you submit code changes, your submissions are understood to be under the sa
 
 - Fork the repository.
 - Create your branch from `master` if you plan to implement new functionality or change existing code significantly.
-  - Create your branch from the oldest branch that is affected by the bug if you plan to fix a bug.
-  - Pull requests for bug fixes must be made for the oldest branch that is [supported](https://github.com/ericsizemore/bench/blob/master/SECURITY.md).
+    - Create your branch from the oldest branch that is affected by the bug if you plan to fix a bug.
+    - Pull requests for bug fixes must be made for the oldest branch that is [supported](https://github.com/ericsizemore/bench/blob/master/SECURITY.md).
 - Implement your change and add tests for it.
 - Ensure the test suite passes.
 - Ensure the code complies with our coding guidelines (see below).
@@ -47,14 +47,14 @@ Before we look into how, here are the guidelines. If your Pull Requests fail to 
 
 ### Git Checkout
 
-The following commands can be used to perform the initial checkout of Bench:
+The following commands can be used to perform the initial checkout of this library:
 
 ```bash
 $ git clone https://github.com/ericsizemore/bench.git
 $ cd bench
 ```
 
-Install Bench's dependencies using [Composer](https://getcomposer.org/):
+Install dependencies using [Composer](https://getcomposer.org/):
 
 ```bash
 $ composer install
@@ -73,7 +73,7 @@ This project comes with configuration files for various tools that are used with
 No configuration is needed for [PHPUnit Coverage Check](https://github.com/ericsizemore/phpunit-coverage-check). You can use PHPUnit Coverage Check to check the coverage percentage in the codebase after your changes. I try to stick to 100% line coverage.
 
 ```bash
-$ composer run-script coverage-check
+$ composer run-script code-coverage
 ```
 
 #### PHPStan
@@ -97,7 +97,7 @@ $ composer run-script psalm
 The configuration file can be found at `.php-cs-fixer.dist.php`, in the repository, for [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer). You can use PHP-CS-Fixer to (re)format your source code for compliance with this project's coding guidelines:
 
 ```bash
-$ composer run-script cs:fix
+$ composer run-script phpcs:fix
 ```
 
 #### Unit tests (via PHPUnit)
@@ -105,7 +105,7 @@ $ composer run-script cs:fix
 The configuration file can be found at `phpunit.xml`, in the repository, for [PHPUnit](https://phpunit.de/index.html). You can run the test suite with:
 
 ```bash
-$ composer run-script test
+$ composer run-script phpunit
 ```
 
 ### Documentation

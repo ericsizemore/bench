@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+  * Added new dev dependency `RectorPHP`.
+    * adds `rector.php` config file.
+
+### Changed
+
+  * `tests/BenchTest` class is now marked `final`.
+  * Small updates throughout based on PHP-CS-Fixer.
+  * Temporarily updated `psalm.xml` to suppress some lingering issues that are on the todo list.
+  * Update `require-dev` constraint for `Psalm` from `dev-master` to `6.13`.
+  * Update workflows to include tests against PHP 8.4.
+  * Changed various `scripts` in `composer.json`.
+  * Updated the [Backward Compatibility Promise](backward-compatibility.md) and [Contributing guide](CONTRIBUTING.md).
+  * Updated the [README](README.md).
+
+
 ## [3.1.1] - 2024-06-13
 
 ### Added

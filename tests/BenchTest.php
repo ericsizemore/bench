@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace Esi\Bench\Tests;
 
 use Esi\Bench\Bench;
-use Iterator;
 use LogicException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -36,7 +35,7 @@ use function sleep;
  * @internal
  */
 #[CoversClass(Bench::class)]
-class BenchTest extends TestCase
+final class BenchTest extends TestCase
 {
     public function testCallableWithArguments(): void
     {
@@ -170,7 +169,7 @@ class BenchTest extends TestCase
     }
 
     #[DataProvider('sizeProvider')]
-    public function testReadableSize(string $expected, int $size, null|string $format): void
+    public function testReadableSize(string $expected, int $size, ?string $format): void
     {
         self::assertSame($expected, Bench::readableSize($size, $format));
     }
@@ -196,8 +195,10 @@ class BenchTest extends TestCase
 
     /**
      * @psalm-api
+     *
+     * @return iterable<array-key, array<array-key, null|int|string>>
      */
-    public static function sizeProvider(): Iterator
+    public static function sizeProvider(): iterable
     {
         yield ['90B', 90, null];
         yield ['1024B', 1024, null];
@@ -216,8 +217,10 @@ class BenchTest extends TestCase
 
     /**
      * @psalm-api
+     *
+     * @return iterable<array-key, array<array-key, float|string>>
      */
-    public static function timeProvider(): Iterator
+    public static function timeProvider(): iterable
     {
         yield ['900ms', 0.9004213];
         yield ['1.156s', 1.1557845];

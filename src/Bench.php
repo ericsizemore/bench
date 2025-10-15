@@ -54,6 +54,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function end(): self
     {
         if (!$this->hasStarted()) {
@@ -69,7 +70,8 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getMemoryPeak(bool $readable = false, null|string $format = null): int|string
+    #[\Override]
+    public function getMemoryPeak(bool $readable = false, ?string $format = null): int|string
     {
         $memory = memory_get_peak_usage(true);
 
@@ -83,7 +85,8 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getMemoryUsage(bool $readable = false, null|string $format = null): int|string
+    #[\Override]
+    public function getMemoryUsage(bool $readable = false, ?string $format = null): int|string
     {
         if (!$this->hasStarted()) {
             throw new LogicException('Bench has not been started. Call start() first.');
@@ -103,7 +106,8 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public function getTime(bool $readable = false, null|string $format = null): float|string
+    #[\Override]
+    public function getTime(bool $readable = false, ?string $format = null): float|string
     {
         if (!$this->hasStarted()) {
             throw new LogicException('Bench has not been started. Call start() first.');
@@ -126,6 +130,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function hasEnded(): bool
     {
         return $this->endTime !== 0.0;
@@ -134,6 +139,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function hasStarted(): bool
     {
         return $this->startTime !== 0.0;
@@ -146,6 +152,7 @@ class Bench implements BenchInterface
      *
      * @param T $arguments
      */
+    #[\Override]
     public function run(callable $callable, mixed ...$arguments): mixed
     {
         $this->start();
@@ -159,6 +166,7 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
+    #[\Override]
     public function start(): void
     {
         $this->startTime = hrtime(true);
@@ -167,7 +175,8 @@ class Bench implements BenchInterface
     /**
      * @inheritDoc
      */
-    public static function readableElapsedTime(float $seconds, null|string $format = null, int $round = 3): string
+    #[\Override]
+    public static function readableElapsedTime(float $seconds, ?string $format = null, int $round = 3): string
     {
         $format ??= '%.3f%s';
 
@@ -177,13 +186,14 @@ class Bench implements BenchInterface
 
         $format = (string) preg_replace('/(%.\d+f)/', '%d', $format);
 
-        return \sprintf($format, round($seconds * 1000, $round), 'ms');
+        return \sprintf($format, round($seconds * 1000.0, $round), 'ms');
     }
 
     /**
      * @inheritDoc
      */
-    public static function readableSize(int $size, null|string $format = null, int $round = 3): string
+    #[\Override]
+    public static function readableSize(int $size, ?string $format = null, int $round = 3): string
     {
         /**
          * @psalm-var array<array-key, string> $units
@@ -198,7 +208,7 @@ class Bench implements BenchInterface
         $format ??= '%.2f%s';
 
         if ($size <= $mod) {
-            return \sprintf('%dB', round($size, $round));
+            return \sprintf('%dB', (int) round($size, $round));
         }
 
         $unit = 0;

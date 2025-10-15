@@ -42,7 +42,7 @@ interface BenchInterface
      * @param bool        $readable Whether the result must be human-readable.
      * @param null|string $format   The format to display (printf format).
      */
-    public function getMemoryPeak(bool $readable = false, null|string $format = null): int|string;
+    public function getMemoryPeak(bool $readable = false, ?string $format = null): int|string;
 
     /**
      * Returns the memory usage at the end checkpoint.
@@ -53,7 +53,7 @@ interface BenchInterface
      * @throws LogicException Should be thrown if end() and/or start() has not been called.
      *                        Can be checked with hasStarted() and hasEnded().
      */
-    public function getMemoryUsage(bool $readable = false, null|string $format = null): int|string;
+    public function getMemoryUsage(bool $readable = false, ?string $format = null): int|string;
 
     /**
      * Returns the elapsed time, readable or not.
@@ -64,7 +64,7 @@ interface BenchInterface
      * @throws LogicException Should be thrown if end() and/or start() has not been called.
      *                        Can be checked with hasStarted() and hasEnded().
      */
-    public function getTime(bool $readable = false, null|string $format = null): float|string;
+    public function getTime(bool $readable = false, ?string $format = null): float|string;
 
     /**
      * Checks if a bench has ended.
@@ -81,8 +81,6 @@ interface BenchInterface
      *
      * @param callable $callable  The callable to wrap.
      * @param mixed    $arguments Additional arguments that can be passed to the callable.
-     *
-     * @return mixed
      */
     public function run(callable $callable, mixed ...$arguments): mixed;
 
@@ -98,7 +96,7 @@ interface BenchInterface
      * @param null|string $format  The format to display (printf format).
      * @param int         $round   Rounding precision (decimals).
      */
-    public static function readableElapsedTime(float $seconds, null|string $format = null, int $round = 3): string;
+    public static function readableElapsedTime(float $seconds, ?string $format = null, int $round = 3): string;
 
     /**
      * Returns a human-readable memory size.
@@ -107,5 +105,5 @@ interface BenchInterface
      * @param null|string $format The format to display (printf format).
      * @param int         $round  Rounding precision (decimals).
      */
-    public static function readableSize(int $size, null|string $format = null, int $round = 3): string;
+    public static function readableSize(int $size, ?string $format = null, int $round = 3): string;
 }

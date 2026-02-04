@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * `tests/BenchTest` class is now marked `final`.
   * Small updates throughout based on PHP-CS-Fixer.
   * Temporarily updated `psalm.xml` to suppress some lingering issues that are on the todo list.
-  * Update `require-dev` constraint for `Psalm` from `dev-master` to `6.13`.
+  * Update `require-dev` constraint for `Psalm` from `dev-master` to `6.15`.
   * Update workflows to include tests against PHP 8.4.
   * Changed various `scripts` in `composer.json`.
   * Updated the [Backward Compatibility Promise](backward-compatibility.md) and [Contributing guide](CONTRIBUTING.md).

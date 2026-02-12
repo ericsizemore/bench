@@ -34,7 +34,7 @@ return RectorConfig::configure()
         privatization: true,
         naming: true,
         earlyReturn: true,
-        strictBooleans: true,
+        //strictBooleans: true,
         rectorPreset: true,
         phpunitCodeQuality: true,
     )

@@ -13,10 +13,8 @@ Bench
 
 `Bench` is a PHP micro library for benchmark.
 
-## Acknowledgements / Credits
-
-`Bench` is a fork of [devster/ubench](https://github.com/devster/ubench), and uses the same license as the original repository by @devster (MIT).
-Thanks to them and all the contributors!
+> [!NOTE]
+> This library is a fork of [devster/ubench](https://github.com/devster/ubench) v2.1.0.
 
 ## Installation
 
@@ -70,25 +68,40 @@ echo $bench->getElapsedTime('callableTimer');
 
 ### Requirements
 
-- Bench works with PHP 8.2.0 or above.
+* PHP >= 8.2
 
-### Submitting bugs and feature requests
+### Credits
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/bench/issues)
+- [Eric Sizemore](https://github.com/ericsizemore)
+- [All Contributors](https://github.com/ericsizemore/bench/contributors)
 
-Issues are the quickest way to report a bug. If you find a bug or documentation error, please check the following first:
+And thanks to the library this is a fork of, [devster/ubench](https://github.com/devster/ubench):
 
-* That there is not an Issue already open concerning the bug
-* That the issue has not already been addressed (within closed Issues, for example)
+- [Jeremy Perret](https://github.com/devster)
+- [All uBench Contributors](https://github.com/devster/ubench/graphs/contributors)
 
 ### Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md)
+See [CONTRIBUTING](./CONTRIBUTING.md).
 
-### Author
+Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/bench/issues).
 
-Eric Sizemore - <admin@secondversion.com> - <https://www.secondversion.com>
+### Contributor Covenant Code of Conduct
+
+See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+
+### Backward Compatibility Promise
+
+See [backward-compatibility.md](./backward-compatibility.md) for more information on Backwards Compatibility.
+
+### Changelog
+
+See the [CHANGELOG](./CHANGELOG.md) for more information on what has changed recently.
 
 ### License
 
-Bench is licensed under the MIT License - see the `LICENSE.md` file for details.
+See the [LICENSE](./LICENSE.md) for more information on the license that applies to this project.
+
+### Security
+
+See [SECURITY](./SECURITY.md) for more information on the security disclosure process.

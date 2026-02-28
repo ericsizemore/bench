@@ -1,4 +1,4 @@
-# Contributing to Bench
+# Contributing to this library
 
 #### Important Note
 
@@ -6,8 +6,8 @@ The contributing guidelines for this project are heavily inspired by, and borrow
 
 ## Welcome!
 
-This project accepts contributions of code and documentation from the community. 
-These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [Bench repository](https://github.com/ericsizemore/bench).
+This project accepts contributions of code and documentation from the community.
+These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [library's repository](https://github.com/ericsizemore/bench).
 
 Here are some examples how you can contribute:
 
@@ -15,7 +15,7 @@ Here are some examples how you can contribute:
 * [Propose a new feature](https://github.com/ericsizemore/bench/issues/new?labels=enhancement,unverified&template=2-feature_request.yml)
 * [Send a pull request](https://github.com/ericsizemore/bench/pulls)
 
-I look forward to your contributions! 
+I look forward to your contributions!
 
 ## Code of Conduct
 
@@ -29,8 +29,8 @@ When you submit code changes, your submissions are understood to be under the sa
 
 - Fork the repository.
 - Create your branch from `master` if you plan to implement new functionality or change existing code significantly.
-  - Create your branch from the oldest branch that is affected by the bug if you plan to fix a bug.
-  - Pull requests for bug fixes must be made for the oldest branch that is [supported](https://github.com/ericsizemore/bench/blob/master/SECURITY.md).
+    - Create your branch from the oldest branch that is affected by the bug if you plan to fix a bug.
+    - Pull requests for bug fixes must be made for the oldest branch that is [supported](https://github.com/ericsizemore/bench/blob/master/SECURITY.md).
 - Implement your change and add tests for it.
 - Ensure the test suite passes.
 - Ensure the code complies with our coding guidelines (see below).
@@ -47,14 +47,14 @@ Before we look into how, here are the guidelines. If your Pull Requests fail to 
 
 ### Git Checkout
 
-The following commands can be used to perform the initial checkout of Bench:
+The following commands can be used to perform the initial checkout of this library:
 
 ```bash
 $ git clone https://github.com/ericsizemore/bench.git
 $ cd bench
 ```
 
-Install Bench's dependencies using [Composer](https://getcomposer.org/):
+Install dependencies using [Composer](https://getcomposer.org/):
 
 ```bash
 $ composer install

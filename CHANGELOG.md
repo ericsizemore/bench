@@ -42,6 +42,26 @@ The library has been refactored, with numerous changes. See [UPGRADING](/.UPGRAD
   * `Bench::hasStarted()`, `Bench::hasEnded()`, and `Bench::getTime()`
 
 
+## [3.2.0] - 2026-02-28
+
+### Added
+
+  * Added new dev dependency `RectorPHP`.
+    * adds `rector.php` config file.
+
+### Changed
+
+  * `tests/BenchTest` class is now marked `final`.
+  * Small updates throughout based on PHP-CS-Fixer.
+  * Temporarily updated `psalm.xml` to suppress some lingering issues that are on the todo list.
+  * Update `require-dev` constraint for `Psalm` from `dev-master` to `6.15`.
+  * Update workflows to include tests against PHP 8.4 & 8.5.
+  * Changed various `scripts` in `composer.json`.
+  * Updated the [Backward Compatibility Promise](backward-compatibility.md) and [Contributing guide](CONTRIBUTING.md).
+  * Updated the [README](README.md).
+  * Updated the [Security Policy](SECURITY.md).
+
+
 ## [3.1.1] - 2024-06-13
 
 ### Added
@@ -117,6 +137,7 @@ Initial release for `Esi\Bench` is set to `3.0.0`.
   * CS fixes and a bit of refactoring.
 
 [unreleased]: https://github.com/ericsizemore/bench/tree/4.x-dev
+[3.2.0]: https://github.com/ericsizemore/bench/releases/tag/v3.2.0
 [3.1.1]: https://github.com/ericsizemore/bench/releases/tag/v3.1.1
 [3.1.0]: https://github.com/ericsizemore/bench/releases/tag/v3.1.0
 [3.0.0]: https://github.com/ericsizemore/bench/releases/tag/v3.0.0

@@ -22,9 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '8.2', '8.3' ]
+        php: [ '8.2', '8.3', '8.4', '8.5' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: "Install PHP ${{ matrix.php }}"
         uses: shivammathur/setup-php@master
@@ -39,7 +39,8 @@ jobs:
         uses: ramsey/composer-install@v3
         with:
            composer-options: "--prefer-dist --optimize-autoloader"
-           require-lock-file: "true"
+           require-lock-file: "false"
+           dependency-versions: "highest"
 
       - name: "Run PHPStan"
         run: composer run-script phpstan
@@ -48,18 +49,29 @@ jobs:
     name: "Psalm"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+
+      - name: "Install PHP 8.3"
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - name: "Validate composer.json and composer.lock"
+        run: composer validate --strict
+
+      - name: "Setup Composer, install dependencies"
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: "--prefer-dist --optimize-autoloader"
+          require-lock-file: "false"
+          dependency-versions: "highest"
 
       - name: "Psalm Analysis"
-        uses: docker://vimeo/psalm-github-actions:latest
-        with:
-          args: --shepherd
-          composer_require_dev: true
-          security_analysis: true
-          report_file: results.sarif
+        run: composer run-script psalm:ci
 
       - name: "Upload Security Analysis results to GitHub"
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif
 
@@ -68,9 +80,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '8.2', '8.3' ]
+        php: [ '8.2', '8.3', '8.4', '8.5' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
            fetch-depth: 10
 
@@ -88,20 +100,21 @@ jobs:
         uses: ramsey/composer-install@v3
         with:
            composer-options: "--prefer-dist --optimize-autoloader"
-           require-lock-file: "true"
+           require-lock-file: "false"
+           dependency-versions: "highest"
 
       - name: "Run test suite"
-        run: composer run-script test
+        run: composer run-script phpunit
 
       - name: "Coverage check"
-        run: composer run-script coverage-check
+        run: composer run-script code-coverage
 
       - uses: sudo-bot/action-scrutinizer@latest
         with:
            cli-args: "--format=php-clover build/logs/clover.xml"
 
       - name: "Upload coverage reports to Codecov"
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: ericsizemore/bench

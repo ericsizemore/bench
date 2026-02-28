@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.2.0] - 2026-02-28
 
 ### Added
 
@@ -100,6 +100,7 @@ Initial release for `Esi\Bench` is set to `3.0.0`.
   * CS fixes and a bit of refactoring.
 
 [unreleased]: https://github.com/ericsizemore/bench/tree/master
+[3.2.0]: https://github.com/ericsizemore/bench/releases/tag/v3.2.0
 [3.1.1]: https://github.com/ericsizemore/bench/releases/tag/v3.1.1
 [3.1.0]: https://github.com/ericsizemore/bench/releases/tag/v3.1.0
 [3.0.0]: https://github.com/ericsizemore/bench/releases/tag/v3.0.0

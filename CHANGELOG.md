@@ -18,10 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Small updates throughout based on PHP-CS-Fixer.
   * Temporarily updated `psalm.xml` to suppress some lingering issues that are on the todo list.
   * Update `require-dev` constraint for `Psalm` from `dev-master` to `6.15`.
-  * Update workflows to include tests against PHP 8.4.
+  * Update workflows to include tests against PHP 8.4 & 8.5.
   * Changed various `scripts` in `composer.json`.
   * Updated the [Backward Compatibility Promise](backward-compatibility.md) and [Contributing guide](CONTRIBUTING.md).
   * Updated the [README](README.md).
+  * Updated the [Security Policy](SECURITY.md).
 
 
 ## [3.1.1] - 2024-06-13

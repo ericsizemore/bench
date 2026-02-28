@@ -1,6 +1,6 @@
 # .scrutinizer.yml
 build:
-    image: default-bionic
+    image: default-jammy
     environment:
         php: 8.2.15
     nodes:

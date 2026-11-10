@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70c1e210a1b5164400cfef521ee3de7c",
+    "content-hash": "f67651b7e10ba98044279b4343f8cada",
     "packages": [],
     "packages-dev": [
         {
@@ -3430,36 +3430,40 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.22.2",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "6e5ca7dd019e502f24824c138cb54fc8f485d2e2"
+                "reference": "e6cea62e9d454b204a0cca034a56744b304c6ecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/6e5ca7dd019e502f24824c138cb54fc8f485d2e2",
-                "reference": "6e5ca7dd019e502f24824c138cb54fc8f485d2e2",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/e6cea62e9d454b204a0cca034a56744b304c6ecd",
+                "reference": "e6cea62e9d454b204a0cca034a56744b304c6ecd",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
-                "php": ">=8.1",
-                "vimeo/psalm": "^6 || ^7.2 || dev-master"
+                "php": ">=8.2",
+                "vimeo/psalm": "^7.2 || dev-master"
             },
             "conflict": {
                 "phpspec/prophecy": "<1.20.0",
-                "phpspec/prophecy-phpunit": "<2.3.0"
+                "phpspec/prophecy-phpunit": "<2.3.0",
+                "phpunit/phpunit": "<11.0"
             },
             "require-dev": {
-                "phpspec/prophecy-phpunit": "^2.3",
-                "phpunit/phpunit": "^10.0 || ^11.0 || ^12.0 || ^13.0",
-                "squizlabs/php_codesniffer": "^3.3.1"
+                "friendsofphp/php-cs-fixer": "^3.88",
+                "phpspec/prophecy-phpunit": "^2.5",
+                "phpunit/phpunit": "^11.0 || ^12.0 || ^13.0"
             },
             "type": "psalm-plugin",
             "extra": {
                 "psalm": {
                     "pluginClass": "Psalm\\PhpUnitPlugin\\Plugin"
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -3480,10 +3484,10 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.22.2"
+                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/1.0.0"
             },
-            "time": "2026-11-09T20:48:04+00:00",
-            "published-time": "2026-11-09T20:55:42+00:00"
+            "time": "2026-11-10T13:14:47+00:00",
+            "published-time": "2026-11-10T13:28:40+00:00"
         },
         {
             "name": "psalm/plugin-symfony",
